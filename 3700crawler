@@ -34,7 +34,7 @@ class FakebookHTMLParser(HTMLParser):
         if 'FLAG' in inf:
             if inf not in self.secret_flags:
                 self.secret_flags.append(inf)
-                print(inf)
+                # print(inf)
 
     # def reset(self):
     #     self.atts = []
@@ -109,10 +109,10 @@ class Crawler:
                 self.secret_flags.extend(myhtml.secret_flags)
             myhtml.atts.clear()
             myhtml.secret_flags.clear()
-            print(len(self.secret_flags))
-            print(self.secret_flags)
-            print(len(self.toCrawl))
-            print(len(self.crawled))
+            # print(len(self.secret_flags))
+            # print(self.secret_flags)
+            # print(len(self.toCrawl))
+            # print(len(self.crawled))
             self.middleware = myhtml.middleware
             if not self.loggedin:
                 if atts:
@@ -125,9 +125,9 @@ class Crawler:
                                                                                          f'username={self.username}&password={self.password}&csrfmiddlewaretoken={self.middleware}\r\n\r\n'
                         self.loggedin = True
                         continue
-            print('---')
-            print(len(atts))
-            print('---')
+            # print('---')
+            # print(len(atts))
+            # print('---')
             for x in atts:
                 if 'fakebook' in x[1]:
                     if (x not in self.toCrawl) and (x not in self.crawled):
@@ -139,9 +139,18 @@ class Crawler:
                 self.next = f'GET %s HTTP/1.1\r\nHost: proj5.3700.network\r\nAccept: text/html\r\n' \
                             f'Cookie: csrftoken={self.csrf_cookie}; sessionid={self.session_cookie}\r\n\r\n' % (self.pop[1])
 
+
+
+
+
     def getContentLength(self):
         str = f'username={self.username}&password={self.password}&csrfmiddlewaretoken={self.middleware}'
         return len(str)
+
+    def flagParser(self):
+        for flag in self.secret_flags:
+            formattedFlag = flag[6:]
+            print(formattedFlag)
 
 
 if __name__ == "__main__":
@@ -153,3 +162,4 @@ if __name__ == "__main__":
     args = parser.parse_args()
     sender = Crawler(args)
     sender.run()
+    sender.flagParser()
