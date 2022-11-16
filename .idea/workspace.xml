@@ -4,12 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1e236492-901e-4003-ba7e-75d0947b1316" name="Changes" comment="no dupe flags">
+    <list default="true" id="1e236492-901e-4003-ba7e-75d0947b1316" name="Changes" comment="parser">
+      <change afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/3700crawler" beforeDir="false" afterPath="$PROJECT_DIR$/3700crawler" afterDir="false" />
-    </list>
-    <list id="483e1d9d-4c86-45e5-aea7-1f5406ef5042" name="Changes by arjunavinash" comment="">
-      <change beforePath="$PROJECT_DIR$/3700crawler" beforeDir="false" afterPath="$PROJECT_DIR$/3700crawler" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/Makefile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/secret_flags" beforeDir="false" afterPath="$PROJECT_DIR$/secret_flags" afterDir="false" />
     </list>
     <list id="02c7ad1c-13ab-4312-8381-cf3acf9ddfda" name="Changes by siddharth" comment="" />
     <option name="SHOW_DIALOG" value="false" />
@@ -27,19 +26,6 @@
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
-  </component>
-  <component name="LineStatusTrackerManager">
-    <file path="$PROJECT_DIR$/3700crawler">
-      <ranges>
-        <range start1="36" end1="37" start2="36" end2="37" changelist="1e236492-901e-4003-ba7e-75d0947b1316" />
-        <range start1="89" end1="90" start2="89" end2="89" changelist="483e1d9d-4c86-45e5-aea7-1f5406ef5042" />
-        <range start1="111" end1="115" start2="110" end2="114" changelist="1e236492-901e-4003-ba7e-75d0947b1316" />
-        <range start1="127" end1="130" start2="126" end2="129" changelist="1e236492-901e-4003-ba7e-75d0947b1316" />
-        <range start1="140" end1="140" start2="139" end2="143" changelist="1e236492-901e-4003-ba7e-75d0947b1316" />
-        <range start1="144" end1="144" start2="147" end2="152" changelist="1e236492-901e-4003-ba7e-75d0947b1316" />
-        <range start1="155" end1="155" start2="163" end2="164" changelist="1e236492-901e-4003-ba7e-75d0947b1316" />
-      </ranges>
-    </file>
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -98,7 +84,7 @@
       <workItem from="1668020972687" duration="8138000" />
       <workItem from="1668484793296" duration="684000" />
       <workItem from="1668555690815" duration="12372000" />
-      <workItem from="1668602871470" duration="6110000" />
+      <workItem from="1668602871470" duration="8322000" />
     </task>
     <task id="LOCAL-00001" summary="Starting">
       <created>1668559707129</created>
@@ -128,7 +114,21 @@
       <option name="project" value="LOCAL" />
       <updated>1668626919934</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="parser">
+      <created>1668629684140</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1668629684140</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Changes by arjunavinash">
+      <created>1668629699758</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1668629699758</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -150,6 +150,8 @@
     <MESSAGE value="logged in" />
     <MESSAGE value="503 RNG error, 5 flags" />
     <MESSAGE value="no dupe flags" />
-    <option name="LAST_COMMIT_MESSAGE" value="no dupe flags" />
+    <MESSAGE value="parser" />
+    <MESSAGE value="Changes by arjunavinash" />
+    <option name="LAST_COMMIT_MESSAGE" value="Changes by arjunavinash" />
   </component>
 </project>
