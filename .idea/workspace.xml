@@ -4,13 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1e236492-901e-4003-ba7e-75d0947b1316" name="Changes" comment="logged in real">
+    <list default="true" id="1e236492-901e-4003-ba7e-75d0947b1316" name="Changes" comment="logged in real acual real for real">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/3700crawler" beforeDir="false" afterPath="$PROJECT_DIR$/3700crawler" afterDir="false" />
     </list>
-    <list id="c4e45bef-2890-477a-aaae-b0e685277489" name="Changes by siddharth" comment="">
-      <change beforePath="$PROJECT_DIR$/3700crawler" beforeDir="false" afterPath="$PROJECT_DIR$/3700crawler" afterDir="false" />
-    </list>
+    <list id="c4e45bef-2890-477a-aaae-b0e685277489" name="Changes by siddharth" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -18,25 +16,6 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
-  </component>
-  <component name="LineStatusTrackerManager">
-    <file path="$PROJECT_DIR$/3700crawler">
-      <ranges>
-        <range start1="17" end1="18" start2="17" end2="18" changelist="1e236492-901e-4003-ba7e-75d0947b1316" />
-        <range start1="19" end1="22" start2="19" end2="20" changelist="1e236492-901e-4003-ba7e-75d0947b1316" />
-        <range start1="23" end1="24" start2="21" end2="22" changelist="1e236492-901e-4003-ba7e-75d0947b1316" />
-        <range start1="27" end1="28" start2="25" end2="26" changelist="1e236492-901e-4003-ba7e-75d0947b1316" />
-        <range start1="54" end1="56" start2="52" end2="54" changelist="1e236492-901e-4003-ba7e-75d0947b1316" />
-        <range start1="69" end1="73" start2="67" end2="67" changelist="1e236492-901e-4003-ba7e-75d0947b1316" />
-        <range start1="81" end1="81" start2="75" end2="78" changelist="1e236492-901e-4003-ba7e-75d0947b1316" />
-        <range start1="86" end1="88" start2="83" end2="83" changelist="1e236492-901e-4003-ba7e-75d0947b1316" />
-        <range start1="106" end1="106" start2="101" end2="103" changelist="1e236492-901e-4003-ba7e-75d0947b1316" />
-        <range start1="110" end1="110" start2="107" end2="108" changelist="1e236492-901e-4003-ba7e-75d0947b1316" />
-        <range start1="116" end1="117" start2="114" end2="115" changelist="c4e45bef-2890-477a-aaae-b0e685277489" />
-        <range start1="121" end1="123" start2="119" end2="129" changelist="1e236492-901e-4003-ba7e-75d0947b1316" />
-        <range start1="124" end1="124" start2="130" end2="134" changelist="c4e45bef-2890-477a-aaae-b0e685277489" />
-      </ranges>
-    </file>
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -94,7 +73,7 @@
       <workItem from="1668020770192" duration="16000" />
       <workItem from="1668020972687" duration="8138000" />
       <workItem from="1668484793296" duration="684000" />
-      <workItem from="1668555690815" duration="16062000" />
+      <workItem from="1668555690815" duration="22780000" />
     </task>
     <task id="LOCAL-00001" summary="Starting">
       <created>1668559707129</created>
@@ -117,7 +96,14 @@
       <option name="project" value="LOCAL" />
       <updated>1668570962238</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="logged in real acual real for real">
+      <created>1668574787951</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1668574787951</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -138,6 +124,7 @@
     <MESSAGE value="Starting" />
     <MESSAGE value="logged in" />
     <MESSAGE value="logged in real" />
-    <option name="LAST_COMMIT_MESSAGE" value="logged in real" />
+    <MESSAGE value="logged in real acual real for real" />
+    <option name="LAST_COMMIT_MESSAGE" value="logged in real acual real for real" />
   </component>
 </project>
