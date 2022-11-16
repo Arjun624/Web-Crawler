@@ -15,17 +15,15 @@ class FakebookHTMLParser(HTMLParser):
 
     def handle_starttag(self, tag, attrs):
         print(attrs)
-        for attr in attrs:
+        for i, attr in enumerate(attrs):
             if attr:
-                for i, val in enumerate(attr):
-                    # print("tup")
-                    # print(tup)
+                for val in attr:
                     if val is not None:
-                        if 'href' in attr[i]:
+                        if 'href' in val:
                             self.atts.append(attr)
                         elif 'secret_flag' in val:
                             print('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
-                            print(attr[i])
+                            print(val)
                         elif 'post' in val:
                             self.post = True
                         elif 'csrfmiddlewaretoken' in val:
@@ -52,8 +50,8 @@ class Crawler:
                     'Host: proj5.3700.network\r\n' \
                     'Accept: text/html\r\n\r\n'
         self.secret_flags = []
-        self.csrf_cookie = ''
-        self.session_cookie = ''
+        self.csrf_cookie = None
+        self.session_cookie = None
         self.middleware = ''
         self.loggedin = False
 
@@ -64,13 +62,10 @@ class Crawler:
 
 
     def processResponse(self, resp):
+        location = None
         for line in resp.splitlines():
             if "302" in line:
                 continue
-            if "Location" in line:
-                self.next = f'GET {line[10:]} HTTP/1.1\r\n' \
-                            f'Host: proj5.3700.network\r\n' \
-                            f'Accept: text/html\r\n\r\n'
             if "Set-Cookie: csrf" in line:
                 self.csrf_cookie = line[22: line.index(";")]
                 print(self.csrf_cookie)
@@ -79,13 +74,20 @@ class Crawler:
                 self.session_cookie = line[22: line.index(";")]
                 print(self.session_cookie)
                 print("cookie")
+            if "Location" in line:
+                location = line[10:]
+        if location:
+            self.next = f'GET {location} HTTP/1.1\r\n' \
+                        f'Host: proj5.3700.network\r\n' \
+                        f'Accept: text/html\r\n' \
+                        f'Cookie: csrftoken={self.csrf_cookie}; sessionid={self.session_cookie}\r\n\r\n'
+
+
 
     def run(self):
         request = ''
 
         while len(self.secret_flags) != 5:
-            if request == self.next:
-                break
             request = self.next
             print("Request to %s:%d" % (self.server, self.port))
             print(request)
@@ -104,10 +106,13 @@ class Crawler:
             #                     f'username={self.username}&password={self.password}&csrfmiddlewaretoken={self.middleware}\r\n\r\n':
             #     break
             self.processResponse(data)
+            if request != self.next:
+                continue
             myhtml = FakebookHTMLParser()
             myhtml.feed(data)
             atts = myhtml.atts
             self.middleware = myhtml.middleware
+            print(self.loggedin)
             if not self.loggedin:
                 if atts:
                     if myhtml.post:
@@ -119,8 +124,16 @@ class Crawler:
                                     f'username={self.username}&password={self.password}&csrfmiddlewaretoken={self.middleware}\r\n\r\n'
                         self.loggedin = True
                         continue
-            self.toCrawl.append(atts)
-            self.next = self.toCrawl.pop()
+            print(atts)
+            for x in atts:
+                if 'fakebook' in atts[1]:
+                    if x not in self.toCrawl and x not in self.crawled:
+                        self.toCrawl.append(x)
+            print(self.toCrawl)
+            curr = self.toCrawl.pop(0)
+            self.crawled.append(curr)
+            self.next = f'GET %s HTTP/1.1\r\nHost: proj5.3700.network\r\nAccept: text/html\r\n' \
+                        f'Cookie: csrftoken={self.csrf_cookie}; sessionid={self.session_cookie}\r\n\r\n' % (curr[1])
             print(self.toCrawl)
 
 
