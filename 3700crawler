@@ -87,7 +87,6 @@ class Crawler:
                         f'Cookie: csrftoken={self.csrf_cookie}; sessionid={self.session_cookie}\r\n\r\n'
 
     def run(self):
-        request = ''
 
         while len(self.secret_flags) != 5:
             request = self.next

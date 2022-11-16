@@ -1,0 +1,134 @@
+Index: 3700crawler
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>#!/usr/bin/env python3\nimport argparse\nimport socket\n\nDEFAULT_SERVER = \"proj5.3700.network\"\nDEFAULT_PORT = 443\n\nclass Crawler:\n    def __init__(self, args):\n        self.server = args.server\n        self.port = args.port\n        self.username = args.username\n        self.password = args.password\n\n    def run(self):\n        request = \"GET / HTTP/1.0\\r\\n\\r\\n\"\n\n        print(\"Request to %s:%d\" % (self.server, self.port))\n        print(request)\n        mysocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)\n        mysocket.connect((self.server, self.port))\n        mysocket.send(request.encode('ascii'))\n\n        data = mysocket.recv(1000)\n        print(\"Response:\\n%s\" % data.decode('ascii'))\n\nif __name__ == \"__main__\":\n    parser = argparse.ArgumentParser(description='crawl Fakebook')\n    parser.add_argument('-s', dest=\"server\", type=str, default=DEFAULT_SERVER, help=\"The server to crawl\")\n    parser.add_argument('-p', dest=\"port\", type=int, default=DEFAULT_PORT, help=\"The port to use\")\n    parser.add_argument('username', type=str, help=\"The username to use\")\n    parser.add_argument('password', type=str, help=\"The password to use\")\n    args = parser.parse_args()\n    sender = Crawler(args)\n    sender.run()
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/3700crawler b/3700crawler
+--- a/3700crawler	(revision 87c58f1a0dae8bc1994c6244a007a5d341357873)
++++ b/3700crawler	(date 1668558896764)
+@@ -1,6 +1,8 @@
+ #!/usr/bin/env python3
+ import argparse
+ import socket
++import ssl
++from html.parser import HTMLParser
+ 
+ DEFAULT_SERVER = "proj5.3700.network"
+ DEFAULT_PORT = 443
+@@ -11,18 +13,41 @@
+         self.port = args.port
+         self.username = args.username
+         self.password = args.password
++        self.context = ssl.create_default_context()
+ 
+     def run(self):
+         request = "GET / HTTP/1.0\r\n\r\n"
+ 
+         print("Request to %s:%d" % (self.server, self.port))
+         print(request)
++
+         mysocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+         mysocket.connect((self.server, self.port))
++
++        if self.port == 443:
++            mysocket = self.context.wrap_socket(mysocket, server_hostname=self.server)
+         mysocket.send(request.encode('ascii'))
+ 
+-        data = mysocket.recv(1000)
+-        print("Response:\n%s" % data.decode('ascii'))
++        data = mysocket.recv(3000).decode('ascii')
++        print("Response:\n%s" % data)
++
++        request = "POST /fakebook/ HTTP/1.0\r\n\r\n"
++
++        print("Request to %s:%d" % (self.server, self.port))
++        print(request)
++
++        mysocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
++        mysocket.connect((self.server, self.port))
++
++        if self.port == 443:
++            mysocket = self.context.wrap_socket(mysocket, server_hostname=self.server)
++        mysocket.send(request.encode('ascii'))
++
++        data = mysocket.recv(3000).decode('ascii')
++        print("Response:\n%s" % data)
++
++
++
+ 
+ if __name__ == "__main__":
+     parser = argparse.ArgumentParser(description='crawl Fakebook')
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<project version=\"4\">\n  <component name=\"ChangeListManager\">\n    <list default=\"true\" id=\"1e236492-901e-4003-ba7e-75d0947b1316\" name=\"Changes\" comment=\"\" />\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\n  </component>\n  <component name=\"MarkdownSettingsMigration\">\n    <option name=\"stateVersion\" value=\"1\" />\n  </component>\n  <component name=\"ProjectId\" id=\"2HK4sp7p0GYZF02rWzCX8crDkmO\" />\n  <component name=\"ProjectViewState\">\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\n    <option name=\"showLibraryContents\" value=\"true\" />\n  </component>\n  <component name=\"PropertiesComponent\">{\n  &quot;keyToString&quot;: {\n    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,\n    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,\n    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;\n  }\n}</component>\n  <component name=\"RunManager\">\n    <configuration name=\"3700crawler\" type=\"PythonConfigurationType\" factoryName=\"Python\" nameIsGenerated=\"true\">\n      <module name=\"Web-Crawler\" />\n      <option name=\"INTERPRETER_OPTIONS\" value=\"\" />\n      <option name=\"PARENT_ENVS\" value=\"true\" />\n      <envs>\n        <env name=\"PYTHONUNBUFFERED\" value=\"1\" />\n      </envs>\n      <option name=\"SDK_HOME\" value=\"\" />\n      <option name=\"WORKING_DIRECTORY\" value=\"$PROJECT_DIR$\" />\n      <option name=\"IS_MODULE_SDK\" value=\"true\" />\n      <option name=\"ADD_CONTENT_ROOTS\" value=\"true\" />\n      <option name=\"ADD_SOURCE_ROOTS\" value=\"true\" />\n      <EXTENSION ID=\"PythonCoverageRunConfigurationExtension\" runner=\"coverage.py\" />\n      <option name=\"SCRIPT_NAME\" value=\"$PROJECT_DIR$/3700crawler\" />\n      <option name=\"PARAMETERS\" value=\"\" />\n      <option name=\"SHOW_COMMAND_LINE\" value=\"false\" />\n      <option name=\"EMULATE_TERMINAL\" value=\"false\" />\n      <option name=\"MODULE_MODE\" value=\"false\" />\n      <option name=\"REDIRECT_INPUT\" value=\"false\" />\n      <option name=\"INPUT_FILE\" value=\"\" />\n      <method v=\"2\" />\n    </configuration>\n  </component>\n  <component name=\"SpellCheckerSettings\" RuntimeDictionaries=\"0\" Folders=\"0\" CustomDictionaries=\"0\" DefaultDictionary=\"application-level\" UseSingleDictionary=\"true\" transferred=\"true\" />\n  <component name=\"TaskManager\">\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\n      <changelist id=\"1e236492-901e-4003-ba7e-75d0947b1316\" name=\"Changes\" comment=\"\" />\n      <created>1668020650718</created>\n      <option name=\"number\" value=\"Default\" />\n      <option name=\"presentableId\" value=\"Default\" />\n      <updated>1668020650718</updated>\n      <workItem from=\"1668020654968\" duration=\"112000\" />\n      <workItem from=\"1668020770192\" duration=\"16000\" />\n    </task>\n    <servers />\n  </component>\n  <component name=\"TypeScriptGeneratedFilesManager\">\n    <option name=\"version\" value=\"3\" />\n  </component>\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	(revision 87c58f1a0dae8bc1994c6244a007a5d341357873)
++++ b/.idea/workspace.xml	(date 1668559451810)
+@@ -1,12 +1,21 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+ <project version="4">
++  <component name="AutoImportSettings">
++    <option name="autoReloadType" value="SELECTIVE" />
++  </component>
+   <component name="ChangeListManager">
+-    <list default="true" id="1e236492-901e-4003-ba7e-75d0947b1316" name="Changes" comment="" />
++    <list default="true" id="1e236492-901e-4003-ba7e-75d0947b1316" name="Changes" comment="">
++      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/3700crawler" beforeDir="false" afterPath="$PROJECT_DIR$/3700crawler" afterDir="false" />
++    </list>
+     <option name="SHOW_DIALOG" value="false" />
+     <option name="HIGHLIGHT_CONFLICTS" value="true" />
+     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+     <option name="LAST_RESOLUTION" value="IGNORE" />
+   </component>
++  <component name="Git.Settings">
++    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
++  </component>
+   <component name="MarkdownSettingsMigration">
+     <option name="stateVersion" value="1" />
+   </component>
+@@ -19,7 +28,11 @@
+   &quot;keyToString&quot;: {
+     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;
++    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
++    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
++    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
++    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
++    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;
+   }
+ }</component>
+   <component name="RunManager">
+@@ -56,10 +69,23 @@
+       <updated>1668020650718</updated>
+       <workItem from="1668020654968" duration="112000" />
+       <workItem from="1668020770192" duration="16000" />
++      <workItem from="1668021037012" duration="1365000" />
++      <workItem from="1668480741052" duration="3859000" />
+     </task>
+     <servers />
+   </component>
+   <component name="TypeScriptGeneratedFilesManager">
+     <option name="version" value="3" />
+   </component>
++  <component name="Vcs.Log.Tabs.Properties">
++    <option name="TAB_STATES">
++      <map>
++        <entry key="MAIN">
++          <value>
++            <State />
++          </value>
++        </entry>
++      </map>
++    </option>
++  </component>
+ </project>
+\ No newline at end of file
