@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1e236492-901e-4003-ba7e-75d0947b1316" name="Changes" comment="">
+    <list default="true" id="1e236492-901e-4003-ba7e-75d0947b1316" name="Changes" comment="503 RNG error, 5 flags">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/3700crawler" beforeDir="false" afterPath="$PROJECT_DIR$/3700crawler" afterDir="false" />
     </list>
@@ -18,6 +18,11 @@
     <option name="BRANCH" value="origin/master" />
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="master" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="MarkdownSettingsMigration">
@@ -77,7 +82,7 @@
       <workItem from="1668020972687" duration="8138000" />
       <workItem from="1668484793296" duration="684000" />
       <workItem from="1668555690815" duration="12372000" />
-      <workItem from="1668602871470" duration="2515000" />
+      <workItem from="1668602871470" duration="4627000" />
     </task>
     <task id="LOCAL-00001" summary="Starting">
       <created>1668559707129</created>
@@ -93,7 +98,14 @@
       <option name="project" value="LOCAL" />
       <updated>1668570685123</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="503 RNG error, 5 flags">
+      <created>1668618758391</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1668618758391</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -113,6 +125,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Starting" />
     <MESSAGE value="logged in" />
-    <option name="LAST_COMMIT_MESSAGE" value="logged in" />
+    <MESSAGE value="503 RNG error, 5 flags" />
+    <option name="LAST_COMMIT_MESSAGE" value="503 RNG error, 5 flags" />
   </component>
 </project>

@@ -32,8 +32,9 @@ class FakebookHTMLParser(HTMLParser):
 
     def handle_data(self, inf):
         if 'FLAG' in inf:
-            self.secret_flags.append(inf)
-            print(inf)
+            if inf not in self.secret_flags:
+                self.secret_flags.append(inf)
+                print(inf)
 
     # def reset(self):
     #     self.atts = []
