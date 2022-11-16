@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1e236492-901e-4003-ba7e-75d0947b1316" name="Changes" comment="logged in real acual real for real">
+    <list default="true" id="1e236492-901e-4003-ba7e-75d0947b1316" name="Changes" comment="make faster">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/3700crawler" beforeDir="false" afterPath="$PROJECT_DIR$/3700crawler" afterDir="false" />
     </list>
@@ -73,7 +73,7 @@
       <workItem from="1668020770192" duration="16000" />
       <workItem from="1668020972687" duration="8138000" />
       <workItem from="1668484793296" duration="684000" />
-      <workItem from="1668555690815" duration="22780000" />
+      <workItem from="1668555690815" duration="23861000" />
     </task>
     <task id="LOCAL-00001" summary="Starting">
       <created>1668559707129</created>
@@ -103,7 +103,14 @@
       <option name="project" value="LOCAL" />
       <updated>1668574787951</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="make faster">
+      <created>1668581437323</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1668581437323</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -125,6 +132,7 @@
     <MESSAGE value="logged in" />
     <MESSAGE value="logged in real" />
     <MESSAGE value="logged in real acual real for real" />
-    <option name="LAST_COMMIT_MESSAGE" value="logged in real acual real for real" />
+    <MESSAGE value="make faster" />
+    <option name="LAST_COMMIT_MESSAGE" value="make faster" />
   </component>
 </project>
