@@ -55,6 +55,7 @@ class Crawler:
         self.csrf_cookie = ''
         self.session_cookie = ''
         self.middleware = ''
+        self.loggedin = False
 
     # def crawl(self):
     #     while self.toCrawl:
@@ -95,32 +96,31 @@ class Crawler:
             mysocket.send(request.encode('ascii'))
             data = mysocket.recv(3000).decode('ascii')
             print("Response:\n%s" % data)
-            if request == f'POST /accounts/login/?next=/fakebook/ HTTP/1.1\r\n' \
-                                f'Host: proj5.3700.network\r\n' \
-                                f'Content-Type: application/x-www-form-urlencoded\r\n' \
-                                f'Content-Length: 122 \r\n' \
-                                f'Cookie: csrftoken={self.csrf_cookie}; sessionid={self.session_cookie}\r\n\r\n' \
-                                f'username={self.username}&password={self.password}&csrfmiddlewaretoken={self.middleware}\r\n\r\n':
-                break
+            # if request == f'POST /accounts/login/?next=/fakebook/ HTTP/1.1\r\n' \
+            #                     f'Host: proj5.3700.network\r\n' \
+            #                     f'Content-Type: application/x-www-form-urlencoded\r\n' \
+            #                     f'Content-Length: 122 \r\n' \
+            #                     f'Cookie: csrftoken={self.csrf_cookie}; sessionid={self.session_cookie}\r\n\r\n' \
+            #                     f'username={self.username}&password={self.password}&csrfmiddlewaretoken={self.middleware}\r\n\r\n':
+            #     break
             self.processResponse(data)
             myhtml = FakebookHTMLParser()
             myhtml.feed(data)
             atts = myhtml.atts
             self.middleware = myhtml.middleware
-            if atts:
-                if 'value' in atts[1]:
-                    self.middleware = atts[1][1]
-                if myhtml.post:
-                    self.next = f'POST /accounts/login/?next=/fakebook/ HTTP/1.1\r\n' \
-                                f'Host: proj5.3700.network\r\n' \
-                                f'Content-Type: application/x-www-form-urlencoded\r\n' \
-                                f'Content-Length: 122 \r\n' \
-                                f'Cookie: csrftoken={self.csrf_cookie}; sessionid={self.session_cookie}\r\n\r\n' \
-                                f'username={self.username}&password={self.password}&csrfmiddlewaretoken={self.middleware}\r\n\r\n'
-                    continue
-
-
+            if not self.loggedin:
+                if atts:
+                    if myhtml.post:
+                        self.next = f'POST /accounts/login/?next=/fakebook/ HTTP/1.1\r\n' \
+                                    f'Host: proj5.3700.network\r\n' \
+                                    f'Content-Type: application/x-www-form-urlencoded\r\n' \
+                                    f'Content-Length: 122 \r\n' \
+                                    f'Cookie: csrftoken={self.csrf_cookie}; sessionid={self.session_cookie}\r\n\r\n' \
+                                    f'username={self.username}&password={self.password}&csrfmiddlewaretoken={self.middleware}\r\n\r\n'
+                        self.loggedin = True
+                        continue
             self.toCrawl.append(atts)
+            self.next = self.toCrawl.pop()
             print(self.toCrawl)
 
 
