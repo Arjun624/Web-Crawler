@@ -32,8 +32,8 @@ class FakebookHTMLParser(HTMLParser):
 
     def handle_data(self, inf):
         if 'FLAG' in inf:
-            self.secret_flags.append(inf)
-            print(inf)
+            if inf not in self.secret_flags:
+                self.secret_flags.append(inf)
 
     # def reset(self):
     #     self.atts = []
@@ -57,8 +57,9 @@ class Crawler:
         self.session_cookie = None
         self.middleware = ''
         self.loggedin = False
+        self.curr = None
 
-    def crawl(self, parser):
+    def crawl(self, crawl_parser):
         request = self.next
         # print("Request to %s:%d" % (self.server, self.port))
         # print(request)
@@ -70,16 +71,16 @@ class Crawler:
         data = mysocket.recv(3000).decode('ascii')
         # print("Response:\n%s" % data)
         self.processResponse(data)
-        parser.feed(data)
-        atts = [x for x in parser.atts]
-        if parser.secret_flags not in self.secret_flags and parser.secret_flags:
-            self.secret_flags.append(parser.secret_flags.pop())
-        parser.atts.clear()
+        crawl_parser.feed(data)
+        atts = [x for x in crawl_parser.atts]
+        if crawl_parser.secret_flags not in self.secret_flags and crawl_parser.secret_flags:
+            self.secret_flags.append(crawl_parser.secret_flags.pop())
+        crawl_parser.atts.clear()
         print(len(self.secret_flags))
         print(self.secret_flags)
         print(len(self.toCrawl))
         print(len(self.crawled))
-        self.middleware = parser.middleware
+        self.middleware = crawl_parser.middleware
         print('---')
         print(len(atts))
         print('---')
@@ -90,15 +91,17 @@ class Crawler:
                     self.crawled.append(x)
         # print(len(self.toCrawl))
         if self.toCrawl:
-            curr = self.toCrawl.pop(0)
+            self.curr = self.toCrawl.pop(0)
             self.next = f'GET %s HTTP/1.1\r\nHost: proj5.3700.network\r\nAccept: text/html\r\n' \
-                        f'Cookie: csrftoken={self.csrf_cookie}; sessionid={self.session_cookie}\r\n\r\n' % (curr[1])
+                        f'Cookie: csrftoken={self.csrf_cookie}; sessionid={self.session_cookie}\r\n\r\n' % (self.curr[1])
 
     def processResponse(self, resp):
         location = None
         for line in resp.splitlines():
             if "302" in line:
                 continue
+            if "503" in line:
+                self.toCrawl.append(self.curr)
             if "Set-Cookie: csrf" in line:
                 self.csrf_cookie = line[22: line.index(";")]
                 # print(self.csrf_cookie)
