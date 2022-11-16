@@ -4,14 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1e236492-901e-4003-ba7e-75d0947b1316" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/Web-Crawler.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Web-Crawler.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="1e236492-901e-4003-ba7e-75d0947b1316" name="Changes" comment="Starting">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/3700crawler" beforeDir="false" afterPath="$PROJECT_DIR$/3700crawler" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/Makefile" afterDir="false" />
     </list>
-    <list id="02c7ad1c-13ab-4312-8381-cf3acf9ddfda" name="Changes by siddharth" comment="" />
+    <list id="c4e45bef-2890-477a-aaae-b0e685277489" name="Changes by siddharth" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -76,8 +73,16 @@
       <workItem from="1668020770192" duration="16000" />
       <workItem from="1668020972687" duration="8138000" />
       <workItem from="1668484793296" duration="684000" />
-      <workItem from="1668555690815" duration="3552000" />
+      <workItem from="1668555690815" duration="12065000" />
     </task>
+    <task id="LOCAL-00001" summary="Starting">
+      <created>1668559707129</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1668559707129</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -93,5 +98,9 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Starting" />
+    <option name="LAST_COMMIT_MESSAGE" value="Starting" />
   </component>
 </project>
