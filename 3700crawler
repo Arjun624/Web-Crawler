@@ -2,6 +2,7 @@
 import argparse
 import socket
 import ssl
+import sys
 from html.parser import HTMLParser
 
 DEFAULT_SERVER = "proj5.3700.network"
@@ -12,31 +13,31 @@ class FakebookHTMLParser(HTMLParser):
     atts = []
     post = None
     middleware = ''
+    secret_flags = []
 
     def handle_starttag(self, tag, attrs):
-        print(attrs)
-        for attr in attrs:
+        for i, attr in enumerate(attrs):
             if attr:
-                for i, val in enumerate(attr):
-                    # print("tup")
-                    # print(tup)
+                for val in attr:
                     if val is not None:
-                        if 'href' in attr[i]:
+                        if 'href' in val:
                             self.atts.append(attr)
-                        elif 'secret_flag' in val:
-                            print('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
-                            print(attr[i])
                         elif 'post' in val:
                             self.post = True
                         elif 'csrfmiddlewaretoken' in val:
                             self.middleware = attrs[i + 1][1]
 
-
     # def handle_endtag(self, tag):
     #     print("Encountered an end tag :", tag)
 
-    # def handle_data(self, inf):
-    #     print("Encountered some data  :", inf)
+    def handle_data(self, inf):
+        if 'FLAG' in inf:
+            self.secret_flags.append(inf)
+            print(inf)
+
+    # def reset(self):
+    #     self.atts = []
+    #     self.secret_flags = []
 
 
 class Crawler:
@@ -52,61 +53,65 @@ class Crawler:
                     'Host: proj5.3700.network\r\n' \
                     'Accept: text/html\r\n\r\n'
         self.secret_flags = []
-        self.csrf_cookie = ''
-        self.session_cookie = ''
+        self.csrf_cookie = None
+        self.session_cookie = None
+        self.pop = None
         self.middleware = ''
         self.loggedin = False
 
     # def crawl(self):
     #     while self.toCrawl:
 
-
-
-
     def processResponse(self, resp):
+        location = None
         for line in resp.splitlines():
             if "302" in line:
                 continue
-            if "Location" in line:
-                self.next = f'GET {line[10:]} HTTP/1.1\r\n' \
-                            f'Host: proj5.3700.network\r\n' \
-                            f'Accept: text/html\r\n\r\n'
+            if "503" in line:
+                self.toCrawl.append(self.pop)
             if "Set-Cookie: csrf" in line:
                 self.csrf_cookie = line[22: line.index(";")]
-                print(self.csrf_cookie)
-                print("cookie")
+                # print(self.csrf_cookie)
+                # print("cookie")
             if "Set-Cookie: sessionid" in line:
                 self.session_cookie = line[22: line.index(";")]
-                print(self.session_cookie)
-                print("cookie")
+                # print(self.session_cookie)
+                # print("cookie")
+            if "Location" in line:
+                location = line[10:]
+        if location:
+            self.next = f'GET {location} HTTP/1.1\r\n' \
+                        f'Host: proj5.3700.network\r\n' \
+                        f'Accept: text/html\r\n' \
+                        f'Cookie: csrftoken={self.csrf_cookie}; sessionid={self.session_cookie}\r\n\r\n'
 
     def run(self):
         request = ''
 
         while len(self.secret_flags) != 5:
-            if request == self.next:
-                break
             request = self.next
-            print("Request to %s:%d" % (self.server, self.port))
-            print(request)
+            # print("Request to %s:%d" % (self.server, self.port))
+            # print(request)
             mysocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             mysocket.connect((self.server, self.port))
             if self.port == 443:
                 mysocket = self.context.wrap_socket(mysocket, server_hostname=self.server)
             mysocket.send(request.encode('ascii'))
             data = mysocket.recv(3000).decode('ascii')
-            print("Response:\n%s" % data)
-            # if request == f'POST /accounts/login/?next=/fakebook/ HTTP/1.1\r\n' \
-            #                     f'Host: proj5.3700.network\r\n' \
-            #                     f'Content-Type: application/x-www-form-urlencoded\r\n' \
-            #                     f'Content-Length: 122 \r\n' \
-            #                     f'Cookie: csrftoken={self.csrf_cookie}; sessionid={self.session_cookie}\r\n\r\n' \
-            #                     f'username={self.username}&password={self.password}&csrfmiddlewaretoken={self.middleware}\r\n\r\n':
-            #     break
             self.processResponse(data)
+            if request != self.next:
+                continue
             myhtml = FakebookHTMLParser()
             myhtml.feed(data)
-            atts = myhtml.atts
+            atts = [x for x in myhtml.atts]
+            if myhtml.secret_flags not in self.secret_flags:
+                self.secret_flags.extend(myhtml.secret_flags)
+            myhtml.atts.clear()
+            myhtml.secret_flags.clear()
+            print(len(self.secret_flags))
+            print(self.secret_flags)
+            print(len(self.toCrawl))
+            print(len(self.crawled))
             self.middleware = myhtml.middleware
             if not self.loggedin:
                 if atts:
@@ -114,14 +119,28 @@ class Crawler:
                         self.next = f'POST /accounts/login/?next=/fakebook/ HTTP/1.1\r\n' \
                                     f'Host: proj5.3700.network\r\n' \
                                     f'Content-Type: application/x-www-form-urlencoded\r\n' \
-                                    f'Content-Length: 122 \r\n' \
-                                    f'Cookie: csrftoken={self.csrf_cookie}; sessionid={self.session_cookie}\r\n\r\n' \
-                                    f'username={self.username}&password={self.password}&csrfmiddlewaretoken={self.middleware}\r\n\r\n'
+                                    f'Content-Length: ' + str(self.getContentLength()) + f'\r\n' \
+                                                                                         f'Cookie: csrftoken={self.csrf_cookie}; sessionid={self.session_cookie}\r\n\r\n' \
+                                                                                         f'username={self.username}&password={self.password}&csrfmiddlewaretoken={self.middleware}\r\n\r\n'
                         self.loggedin = True
                         continue
-            self.toCrawl.append(atts)
-            self.next = self.toCrawl.pop()
-            print(self.toCrawl)
+            print('---')
+            print(len(atts))
+            print('---')
+            for x in atts:
+                if 'fakebook' in x[1]:
+                    if (x not in self.toCrawl) and (x not in self.crawled):
+                        self.toCrawl.append(x)
+                        self.crawled.append(x)
+            # print(len(self.toCrawl))
+            if len(self.toCrawl) > 0:
+                self.pop = self.toCrawl.pop(0)
+                self.next = f'GET %s HTTP/1.1\r\nHost: proj5.3700.network\r\nAccept: text/html\r\n' \
+                            f'Cookie: csrftoken={self.csrf_cookie}; sessionid={self.session_cookie}\r\n\r\n' % (self.pop[1])
+
+    def getContentLength(self):
+        str = f'username={self.username}&password={self.password}&csrfmiddlewaretoken={self.middleware}'
+        return len(str)
 
 
 if __name__ == "__main__":
